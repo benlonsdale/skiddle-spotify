@@ -1,9 +1,11 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Firstly
+
+Pull down a copy of the application and run npm install.
+You will need to install this chrome extension to get around cross-origin issues: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en
+
 ## Available Scripts
-
-In the project directory, you can run:
-
 ### `npm start`
 
 Runs the app in the development mode.<br>
@@ -12,33 +14,26 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
-### `npm test`
+## Commentary
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Description
 
-### `npm run build`
+This project is a small, mobile responsive application which integrates with both the Spotify and Skiddle APIs to find events with available tickets for you favourite bands.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technologies
+### React Hooks
+You will notice that there are no class components used in this application, no component life cycle methods, this is because it has been built using the upcoming `16.7.0-alpha` version of react which implements `react hooks`. This version of react represents a huge change in the way that react components share logic and from the example I have provided you will see that the code looks very different to the current react best practices. These best practices will be re-evaluated and reset when this up coming release hits stable (scheduled for some time in early 2019).
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+I chose to use this version of react, for two reasons; firstly I wanted to demonstrate exactly how up to date I keep with the react ecosystem and secondly, I am looking forward to this new way of working with react. The direction that react is heading in is very exciting, the core team are very communicative and open to having discussions with the wider community, but we only benefit from those at the very top of the tree if we keep up to date.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Redux
+I chose to use redux to handle validation tokens which allows you to access the global reducer state from anywhere in the application. I could have also used the new react `context` api which also allows elements of state to be accessed from different places in the application.
 
-### `npm run eject`
+### Styled Components
+Styled components was used as a way to ensure that where ever a component is used in the application, it will have the correct appearance without the need for overly complex style sheets and class names.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Axios
+Axios is used as a convenience tool, as when using the browser native `fetch()` api, handling a json response is a two step process, where axios automatically parses json responses into objects.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### React router
+React router was used as it is a popular routing library that i am familiar with, although other routing libraries are available
