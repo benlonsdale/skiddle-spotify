@@ -1,28 +1,68 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Provider } from "react-redux";
+import store, { constants } from "./store";
 
-class App extends Component {
-  render() {
+import SpotifyAuth from "./containers/Spotify/components/SpotifyAuth";
+import Artists from "./containers/Artists/components/Artists";
+import Events from "./containers/Artists/components/Events";
+import { AppWrapper, Header, Card } from "./components/Layout";
+
+const ProtectedApp = () => {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+        <Card>
+            <BrowserRouter>
+                <Switch>
+                    <Route exact path="/" component={Artists} />
+                    <Route
+                        exact
+                        path="/artists/:artist/events"
+                        component={Events}
+                    />
+                </Switch>
+            </BrowserRouter>
+        </Card>
     );
-  }
-}
+};
 
-export default App;
+const AuthProtect = () => {
+    const [token, setToken] = useState(
+        window.localStorage.getItem("spotifyToken")
+            ? window.localStorage.getItem("spotifyToken")
+            : null
+    );
+
+    useEffect(
+        () => {
+            window.localStorage.setItem("spotifyToken", token ? token : "");
+            store.dispatch({
+                type: constants.SET_TOKEN,
+                payload: token
+            });
+        },
+        [token]
+    );
+
+    return (
+        <AppWrapper>
+            <div className="content">
+                <Header>
+                    <img src="https://d1plawd8huk6hh.cloudfront.net/images/responsive/logo_rebrand.2.svg" />
+                </Header>
+                <Provider store={store}>
+                    {token === null || token === undefined ? (
+                        <SpotifyAuth
+                            onAuthenticated={response => {
+                                setToken("Bearer " + response.access_token);
+                            }}
+                        />
+                    ) : (
+                        <ProtectedApp />
+                    )}
+                </Provider>
+            </div>
+        </AppWrapper>
+    );
+};
+
+export default AuthProtect;
