@@ -11,7 +11,8 @@ const ProtectedApp = () => {
         <div className="App">
             <BrowserRouter>
                 <Switch>
-                    <Route match="/" component={Artists} />
+                    <Route exact path="/" component={Artists} />
+                    <Route exact path="/events/:artist" render={() => <h1>test</h1>} />
                 </Switch>
             </BrowserRouter>
         </div>
