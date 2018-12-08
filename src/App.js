@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import SpotifyAuth from './containers/Spotify/components/SpotifyAuth';
+import { Provider } from "react-redux";
+import store, { constants } from "./store";
+
+import SpotifyAuth from "./containers/Spotify/components/SpotifyAuth";
 
 const ProtectedApp = () => {
     return (
@@ -16,17 +19,30 @@ const ProtectedApp = () => {
 };
 
 const AuthProtect = () => {
-    const [ token, setToken ] = useState(window.localStorage.getItem('spotifyToken'))
+    const [token, setToken] = useState(
+        window.localStorage.getItem("spotifyToken")
+    );
 
-    if(token === null){
-        return <SpotifyAuth onAuthenticated={(response) => {
-            setToken('Bearer ' + response.accessToken);
-            // window.location = '/';
-        }} />
-    }
+    useEffect(() => {        
+        window.localStorage.setItem("spotifyToken", token);
+        store.dispatch({
+            type: constants.SET_TOKEN,
+            payload: token
+        })
+    }, [token])
 
     return (
-        <ProtectedApp />
+        <Provider store={store}>
+            {token === null ? (
+                <SpotifyAuth
+                    onAuthenticated={response => {                        
+                        setToken("Bearer " + response.access_token);           
+                    }}
+                />
+            ) : (
+                <ProtectedApp />
+            )}
+        </Provider>
     );
 };
 
