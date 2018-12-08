@@ -1,28 +1,49 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Provider } from "react-redux";
+import store, { constants } from "./store";
 
-class App extends Component {
-  render() {
+import SpotifyAuth from "./containers/Spotify/components/SpotifyAuth";
+
+const ProtectedApp = () => {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+        <div className="App">
+            <h1>The App</h1>
+            <BrowserRouter>
+                <Switch>
+                    <Route match="/" render={() => <h1>Route</h1>} />
+                </Switch>
+            </BrowserRouter>
+        </div>
     );
-  }
-}
+};
 
-export default App;
+const AuthProtect = () => {
+    const [token, setToken] = useState(
+        window.localStorage.getItem("spotifyToken")
+    );
+
+    useEffect(() => {        
+        window.localStorage.setItem("spotifyToken", token);
+        store.dispatch({
+            type: constants.SET_TOKEN,
+            payload: token
+        })
+    }, [token])
+
+    return (
+        <Provider store={store}>
+            {token === null ? (
+                <SpotifyAuth
+                    onAuthenticated={response => {                        
+                        setToken("Bearer " + response.access_token);           
+                    }}
+                />
+            ) : (
+                <ProtectedApp />
+            )}
+        </Provider>
+    );
+};
+
+export default AuthProtect;
