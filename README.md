@@ -23,6 +23,8 @@ Unfortunately I only have had a few hours availavle to work on this project toda
 
 - Failed api requests, the app doesn't handle when your spotify token becomes invalidated. Currently you will need to go into your dev tools, onto the `Application` tab, delete the `spotifyToken` and then refresh the app. Obviously this isn't the workflow that I would publish the app with
 - Pagination: although the APIs are paginated, the front end isn't. The app is built to be able to handle it, the controls have not yet been added
+- Testing: there are no unit tests or automated acceptance tests for this application. This is something that given more time i would have wanted to add here.
+- Gig details screen: I didn't get chance to add a gig details screen but there would be another step in the app showing dates, times, locations etc.
 
 ### How would I extend this?
 There are a couple of ideas I have had for extending the functionality of this app.
