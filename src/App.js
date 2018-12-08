@@ -4,14 +4,14 @@ import { Provider } from "react-redux";
 import store, { constants } from "./store";
 
 import SpotifyAuth from "./containers/Spotify/components/SpotifyAuth";
+import Artists from './containers/Artists/components/Artists';
 
 const ProtectedApp = () => {
     return (
         <div className="App">
-            <h1>The App</h1>
             <BrowserRouter>
                 <Switch>
-                    <Route match="/" render={() => <h1>Route</h1>} />
+                    <Route match="/" component={Artists} />
                 </Switch>
             </BrowserRouter>
         </div>
@@ -35,7 +35,7 @@ const AuthProtect = () => {
         <Provider store={store}>
             {token === null ? (
                 <SpotifyAuth
-                    onAuthenticated={response => {                        
+                    onAuthenticated={response => {                      
                         setToken("Bearer " + response.access_token);           
                     }}
                 />
