@@ -14,11 +14,21 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
-## Commentary
-
-### Description
+## Description
 
 This project is a small, mobile responsive application which integrates with both the Spotify and Skiddle APIs to find events with available tickets for you favourite bands.
+
+### What is missing?
+Unfortunately I only have had a few hours availavle to work on this project today, so there are a couple of fundamental issues
+
+- Failed api requests, the app doesn't handle when your spotify token becomes invalidated. Currently you will need to go into your dev tools, onto the `Application` tab, delete the `spotifyToken` and then refresh the app. Obviously this isn't the workflow that I would publish the app with
+- Pagination: although the APIs are paginated, the front end isn't. The app is built to be able to handle it, the controls have not yet been added
+
+### How would I extend this?
+There are a couple of ideas I have had for extending the functionality of this app.
+- Firstly, it would allow people to actually book tickets where they are available.
+- Maybe give the user some filters to let them only see bands or events where there are tickets available
+- After booking tickets for a band it would be a nice feature to have an option to `Go get hyped` or something, that then linked the user back to their spotify and loaded up the top tracks for the artist they just booked tickets for.
 
 ## Technologies
 ### React Hooks
