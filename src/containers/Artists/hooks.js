@@ -13,8 +13,8 @@ export const useArtists = (token, page = 1) => {
                 },
                 params: {
                     type: 'artist',
-                    limit: 20,
-                    offset: 20 * page,
+                    limit: 12,
+                    offset: 12 * page,
                 }
             })
             .then((res) => {
